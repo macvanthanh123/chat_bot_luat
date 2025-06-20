@@ -27,7 +27,7 @@ with st.sidebar:
                             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                         )
                     }
-                    response = requests.post("http://localhost:8000/upload", files=files)
+                    response = requests.post("http://app:8000/upload", files=files)
                     res = response.json()
 
                     if response.status_code == 200:
@@ -58,7 +58,7 @@ if query:
             if alpha is not None:
                 params["alpha"] = alpha
 
-            response = requests.get("http://localhost:8000/chat", params=params)
+            response = requests.get("http://app:8000/chat", params=params)
             data = response.json()
 
             answer = data.get("answer", "Không có phản hồi.")

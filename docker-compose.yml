@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PWD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgresql://${PG_USER}:${PG_PWD}@db:5432/${DB_NAME}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./docx:/app/docx
+
+  ui:
+    build: .
+    depends_on:
+      - app
+    env_file:
+      - .env
+    command: streamlit run chat_bot_ui.py --server.port 8501 --server.address 0.0.0.0
+    environment:
+      - DATABASE_URL=postgresql://${PG_USER}:${PG_PWD}@db:5432/${DB_NAME}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./docx:/app/docx
+
+volumes:
+  pgdata:

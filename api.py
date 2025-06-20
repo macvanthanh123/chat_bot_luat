@@ -16,7 +16,7 @@ app = FastAPI(
 )
 
 db = PostgresHandler()
-engine = SearchEngine()
+engine = None
 gemini = GeminiClient()  
 DOCX_DIR = os.path.join(os.getcwd(), "docx")
 
@@ -25,6 +25,8 @@ def startup():
     db.create_database()
     db.create_articles_table()
     db.create_chunks_table()
+    global engine
+    engine = SearchEngine()
 
 
 @app.post("/upload/")
@@ -54,6 +56,19 @@ async def upload_docx(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Lỗi xử lý file: {str(e)}")
 
+@app.get("/chunks/")
+def get_all_chunks(doc_id: int = None):
+    """
+    Trả về tất cả các chunk hoặc các chunk của một doc_id cụ thể (nếu truyền doc_id).
+    """
+    if doc_id is not None:
+        chunks = db.fetch_chunks_by_doc_id(doc_id)
+    else:
+        articles = db.fetch_all_articles()
+        chunks = []
+        for article in articles:
+            chunks.extend(db.fetch_chunks_by_doc_id(article["id"]))
+    return JSONResponse(chunks)
 
 @app.get("/search/vector/")
 def vector_search(query: str = Query(...), top_k: int = 5):
