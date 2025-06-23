@@ -23,7 +23,7 @@ class GeminiClient:
 
     def classify_query(self, query: str) -> str:
         normalized = query.lower()
-        greetings = ["chào", "xin chào", "hello", "hi", "yo", "bạn khỏe không"]
+        greetings = ["chào", "xin chào", "hello","helo", "hi", "yo", "bạn khỏe không"]
         personal = ["bạn là ai", "giới thiệu", "tên bạn", "chức năng", "làm gì", "giúp gì"]
         legal_keywords = ["điều", "luật", "quy định", "thuế", "pháp luật", "trách nhiệm", "nghĩa vụ"]
 
@@ -36,6 +36,7 @@ class GeminiClient:
 
     def build_prompt(self, query: str, search_results: list) -> str:
         category = self.classify_query(query)
+        print(f"Query category: {category}")
 
         if category == "greeting":
             return f"""
@@ -44,43 +45,56 @@ Bạn là một trợ lý pháp lý thân thiện.
 Người dùng hỏi:
 \"{query}\"
 
-👉 Hãy chào hỏi, giới thiệu bản thân một cách ngắn gọn, thân thiện và thể hiện rằng bạn có thể hỗ trợ tra cứu điều luật khi cần.
+👉 Hãy chào hỏi và giới thiệu bản thân ngắn gọn.  
+⚠️ Không trả lời bất kỳ nội dung nào khác ngoài việc chào hỏi và giới thiệu.
 """.strip()
 
         elif category == "legal" and search_results:
             context = "\n\n".join(f"{chunk['content']}" for chunk in search_results)
             return f"""
-Bạn là một trợ lý pháp luật thông minh.
+Bạn là một trợ lý pháp luật thông minh, nghiêm túc và trung thực.
 
-Câu hỏi:
+Bạn **chỉ được phép trả lời các câu hỏi liên quan đến pháp luật Việt Nam và chỉ sử dụng nội dung trong tài liệu dưới đây**.
+
+---
+📌 Câu hỏi:
 \"{query}\"
 
-Các đoạn luật liên quan:
+---
+📘 Tài liệu:
 {context}
 
-👉 Trả lời đúng nội dung luật, rõ ràng, dễ hiểu. Không suy đoán, không sáng tạo.  
-❗ Nếu nội dung chưa đủ, hãy nói: "Tôi chưa có đủ thông tin để trả lời chính xác."
+---
+👉 Trả lời đúng nội dung luật, rõ ràng, dễ hiểu.  
+❌ Không suy đoán. Không sáng tạo. Không trả lời nếu thông tin không có trong tài liệu.
+
+❗ Nếu không có đủ thông tin, hãy trả lời:  
+"Tôi xin lỗi, tôi không có đủ thông tin trong tài liệu hiện tại để trả lời câu hỏi này."
 """.strip()
 
         elif category == "legal" and not search_results:
             return f"""
-Bạn là một trợ lý pháp luật thông minh.
+Bạn là một trợ lý pháp luật nghiêm túc.
 
 Câu hỏi:
 \"{query}\"
 
-👉 Rất tiếc, hiện tại tôi không tìm thấy điều luật nào liên quan đến câu hỏi này trong dữ liệu của bạn.  
-Hãy thử đặt lại câu hỏi cụ thể hơn hoặc tải thêm tài liệu luật liên quan.
+Hiện tại, không có tài liệu nào liên quan đến câu hỏi này.
+
+👉 Vui lòng trả lời:  
+"Tôi xin lỗi, tôi không có đủ thông tin trong tài liệu hiện tại để trả lời câu hỏi này."
 """.strip()
 
-        else:  # general
+        else:  
             return f"""
-Bạn là một trợ lý thông minh, thân thiện.
+Bạn là một trợ lý pháp lý nghiêm túc.
 
 Người dùng hỏi:
 \"{query}\"
 
-👉 Trả lời tự nhiên, gần gũi như một trợ lý thông minh. Nếu không rõ câu hỏi, hãy gợi ý người dùng hỏi về điều luật hoặc chủ đề cụ thể hơn.
+⚠️ Câu hỏi này không liên quan đến pháp luật.  
+👉 Vui lòng trả lời:  
+"Tôi xin lỗi, tôi chỉ hỗ trợ trả lời các câu hỏi liên quan đến pháp luật có trong tài liệu được cung cấp."
 """.strip()
 
     def build_strict_prompt(self, query: str, chunk: dict) -> str:
@@ -88,16 +102,22 @@ Người dùng hỏi:
         content = chunk.get("content", "")
 
         return f"""
-Bạn là một trợ lý pháp lý thông minh, chuyên hỗ trợ trích xuất chính xác nội dung từ văn bản pháp luật.
+Bạn là một trợ lý pháp lý chuyên nghiệp, nghiêm túc và chính xác.
 
-Câu hỏi:
+Bạn chỉ được phép trả lời câu hỏi dựa trên nội dung dưới đây.
+
+---
+📌 Câu hỏi:
 \"{query}\"
 
-Nội dung điều luật:
-📘 {title}
+📘 Nội dung điều luật:
+{title}
 {content}
 
-👉 Hãy chỉ sử dụng nội dung trên để trả lời một cách thân thiện.  
-Không được phỏng đoán, không sáng tạo.  
-Nếu câu trả lời không nằm trong điều luật này, hãy nói: "Tôi không có đủ thông tin trong điều luật này để trả lời chính xác."
+---
+👉 Trả lời ngắn gọn, chính xác, **chỉ dựa vào nội dung trên**.  
+❌ Không sáng tạo, không suy đoán.
+
+❗ Nếu thông tin không nằm trong đoạn này, hãy trả lời:  
+"Tôi không có đủ thông tin trong điều luật này để trả lời chính xác."
 """.strip()

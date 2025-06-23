@@ -9,7 +9,7 @@ st.title("📘 ChatBot Luật Việt Nam")
 with st.sidebar:
     st.header("⚙️ Cấu hình tìm kiếm")
     mode = st.radio("Phương pháp tìm kiếm", ["hybrid", "vector", "keyword"])
-    top_k = st.slider("Số kết quả (top_k)", 1, 100, 5)
+    top_k = st.slider("Số kết quả (top_k)", 1, 10, 5)
     alpha = st.slider("Độ cân bằng (alpha)", 0.0, 1.0, 0.6) if mode == "hybrid" else None
 
     st.markdown("---")

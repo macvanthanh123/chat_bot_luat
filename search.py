@@ -23,14 +23,22 @@ class SearchEngine:
 
     def vector_search(self, query: str, top_k=5):
         query_vec = self.encode_query(query)
-        results = []
+        if query_vec is None:
+            return []
 
+        query_vec = np.array(query_vec).reshape(1, -1)
+        query_vec = query_vec / np.linalg.norm(query_vec)
+
+        results = []
         for chunk in self.all_chunks:
             vector = chunk.get("vector")
-            if not vector:
+            if not vector or not isinstance(vector, list):
                 continue
-            doc_vec = np.array(vector).reshape(1, -1)
-            score = cosine_similarity(query_vec, doc_vec)[0][0]
+
+            doc_vec = np.array(vector)
+            doc_vec = doc_vec / np.linalg.norm(doc_vec)
+
+            score = float(np.dot(query_vec, doc_vec))
             results.append({
                 "doc_id": chunk["doc_id"],
                 "chunk_id": chunk["chunk_id"],
@@ -42,47 +50,56 @@ class SearchEngine:
 
         return sorted(results, key=lambda x: x["score"], reverse=True)[:top_k]
 
+
     def keyword_search(self, query: str, top_k: int = 5):
         results = []
         query_norm = self._normalize(query)
-
-        for chunk in self.all_chunks:
-            title_norm = self._normalize(chunk["title"])
-            if query_norm in title_norm:
-                results.append({
-                    "doc_id": chunk["doc_id"],
-                    "chunk_id": chunk["chunk_id"],
-                    "title": chunk["title"],
-                    "content": chunk["content"],
-                    "score": 1.0,
-                    "type": "keyword"
-                })
-
-        if len(results) < top_k:
+        print('query_norm:', query_norm)
+        dieu_match = re.search(r"điều\s+(\d+)", query_norm)
+        if dieu_match:
+            dieu_query = f"{dieu_match.group(0)}"
+            print('dieu_query:', dieu_query)
             for chunk in self.all_chunks:
-                if (chunk["doc_id"], chunk["chunk_id"]) in {(r["doc_id"], r["chunk_id"]) for r in results}:
-                    continue 
                 content_norm = self._normalize(chunk["content"])
-                if query_norm in content_norm:
+                if dieu_query in content_norm:
                     results.append({
                         "doc_id": chunk["doc_id"],
                         "chunk_id": chunk["chunk_id"],
                         "title": chunk["title"],
                         "content": chunk["content"],
-                        "score": 0.9,
+                        "score": 1.0,
                         "type": "keyword"
                     })
+        if len(results) < top_k:
+            for chunk in self.all_chunks:
+                content_norm = self._normalize(chunk["content"])
+                if query_norm in content_norm:
+                    key = (chunk["doc_id"], chunk["chunk_id"])
+                    if key not in {(r["doc_id"], r["chunk_id"]) for r in results}:
+                        results.append({
+                            "doc_id": chunk["doc_id"],
+                            "chunk_id": chunk["chunk_id"],
+                            "title": chunk["title"],
+                            "content": chunk["content"],
+                            "score": 1.0,
+                            "type": "keyword"
+                        })
 
         if len(results) < top_k:
-            keywords = query_norm.split()
+            stop_words = {
+                        "tôi", "là", "cho", "hay", "xin", "biết", "giúp", "với", "làm", "có", "bạn",
+                        "của", "ở", "và", "hoặc", "nhé", "thì", "đó", "này", "nào", "cái", "vậy", "ra",
+                        "đi", "được", "sao", "ai", "đâu", "đây", "gì", "hả", "không", "như", "nha", "nhưng"
+                    }
+
+            keywords = [kw for kw in query_norm.split() if kw not in stop_words]
             for chunk in self.all_chunks:
                 key = (chunk["doc_id"], chunk["chunk_id"])
                 if key in {(r["doc_id"], r["chunk_id"]) for r in results}:
                     continue
-                text = f"{chunk['title']} {chunk['content']}"
-                text_norm = self._normalize(text)
-                match_score = sum(1 for kw in keywords if kw in text_norm) / len(keywords)
-                if match_score >= 0.4:
+                content_norm = self._normalize(chunk["content"])
+                match_score = sum(1 for kw in keywords if kw in content_norm) / max(1, len(keywords))
+                if match_score >= 0.2:
                     results.append({
                         "doc_id": chunk["doc_id"],
                         "chunk_id": chunk["chunk_id"],
@@ -101,15 +118,10 @@ class SearchEngine:
         vec_results = self.vector_search(query, top_k=100)
         kw_results = self.keyword_search(query, top_k=100)
 
-        kw_dict = {}
-        for r in kw_results:
-            key = (r["doc_id"], r["chunk_id"])
-            title_norm = self._normalize(r["title"])
-            if query_norm in title_norm:
-                r["score"] = 1.0
-            elif query_norm in self._normalize(r["content"]):
-                r["score"] = 0.9
-            kw_dict[key] = r
+        kw_dict = {
+            (r["doc_id"], r["chunk_id"]): r
+            for r in kw_results
+        }
 
         hybrid = []
         seen_keys = set()
@@ -118,6 +130,7 @@ class SearchEngine:
             key = (r["doc_id"], r["chunk_id"])
             kw_score = kw_dict[key]["score"] if key in kw_dict else 0.0
             hybrid_score = alpha * r["score"] + (1 - alpha) * kw_score
+
             hybrid.append({
                 "doc_id": r["doc_id"],
                 "chunk_id": r["chunk_id"],
@@ -135,8 +148,9 @@ class SearchEngine:
                     "chunk_id": r["chunk_id"],
                     "title": r["title"],
                     "content": r["content"],
-                    "score": r["score"],
+                    "score": round((1 - alpha) * r["score"], 4),  
                     "type": "hybrid"
                 })
 
         return sorted(hybrid, key=lambda x: x["score"], reverse=True)[:top_k]
+

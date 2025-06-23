@@ -57,9 +57,9 @@ async def upload_docx(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=f"Lỗi xử lý file: {str(e)}")
 
 @app.get("/chunks/")
-def get_all_chunks(doc_id: int = None):
+def get_all_chunks(doc_id: int = None, limit: int = None):
     """
-    Trả về tất cả các chunk hoặc các chunk của một doc_id cụ thể (nếu truyền doc_id).
+    Trả về các chunk, có thể lọc theo doc_id và giới hạn số lượng bằng limit.
     """
     if doc_id is not None:
         chunks = db.fetch_chunks_by_doc_id(doc_id)
@@ -68,6 +68,8 @@ def get_all_chunks(doc_id: int = None):
         chunks = []
         for article in articles:
             chunks.extend(db.fetch_chunks_by_doc_id(article["id"]))
+    if limit is not None:
+        chunks = chunks[:limit]
     return JSONResponse(chunks)
 
 @app.get("/search/vector/")
