@@ -1,0 +1,65 @@
+query,expected_answer,expected_chunk_id,label
+Quản lý rủi ro trong quản lý thuế được áp dụng như thế nào? Theo luật hiện hành?,,"[5, 73, 42, 3, 15]",0
+Việc hoàn thuế được thực hiện trong trường hợp nào? Trong trường hợp cụ thể nào?,,"[39, 110, 124, 68, 121]",0
+"Theo quy định, cơ quan nào chịu trách nhiệm hướng dẫn việc kê khai thuế điện tử?",,"[18, 8, 17, 15, 27]",0
+Việc cưỡng chế thi hành quyết định hành chính về thuế được quy định như thế nào? Bạn có thể nêu rõ không?,,"[134, 123, 124, 128, 3]",0
+"Theo quy định, cơ quan thuế bao gồm những đơn vị nào?",,"[19, 30, 17, 43, 50]",0
+Ai được gọi là công chức quản lý thuế? Bạn có thể nêu rõ không?,,"[121, 134, 8, 46, 122]",0
+Người nộp thuế có những quyền gì theo luật?,,"[17, 45, 3, 5, 27]",0
+Người nộp thuế có những quyền gì theo luật? Bạn có thể nêu rõ không?,,"[136, 3, 17, 15, 64]",0
+"Theo quy định, ai được gọi là công chức quản lý thuế?",,"[105, 3, 5, 10, 18]",0
+Ai là đối tượng áp dụng theo Luật Quản lý thuế? Trong trường hợp cụ thể nào?,,"[3, 133, 73, 130, 143]",0
+Người nộp thuế có những quyền gì theo luật? Bạn có thể nêu rõ không?,,"[136, 3, 17, 15, 64]",0
+Ai được gọi là công chức quản lý thuế? Bạn có thể nêu rõ không?,,"[121, 134, 8, 46, 122]",0
+Quản lý rủi ro trong quản lý thuế được áp dụng như thế nào? Theo luật hiện hành?,,"[5, 73, 42, 3, 15]",0
+Ai được gọi là công chức quản lý thuế? Theo luật hiện hành?,,"[105, 5, 15, 136, 8]",0
+Luật Quản lý thuế quy định phạm vi điều chỉnh như thế nào? Theo luật hiện hành?,,"[136, 15, 139, 42, 27]",0
+Việc hoàn thuế được thực hiện trong trường hợp nào?,,"[110, 39, 35, 68, 69]",0
+Việc hoàn thuế được thực hiện trong trường hợp nào? Trong trường hợp cụ thể nào?,,"[39, 110, 124, 68, 121]",0
+Việc hoàn thuế được thực hiện trong trường hợp nào?,,"[110, 39, 35, 68, 69]",0
+Việc hoàn thuế được thực hiện trong trường hợp nào? Trong trường hợp cụ thể nào?,,"[39, 110, 124, 68, 121]",0
+Ai được gọi là công chức quản lý thuế? Trong trường hợp cụ thể nào?,,"[3, 121, 133, 120, 39]",0
+Việc cưỡng chế thi hành quyết định hành chính về thuế được quy định như thế nào? Bạn có thể nêu rõ không?,,"[134, 123, 124, 128, 3]",0
+"Theo quy định, người nộp thuế có những quyền gì theo luật?",,"[17, 3, 45, 133, 5]",0
+Việc cưỡng chế thi hành quyết định hành chính về thuế được quy định như thế nào?,,"[128, 133, 125, 3, 126]",0
+Việc cưỡng chế thi hành quyết định hành chính về thuế được quy định như thế nào?,,"[128, 133, 125, 3, 126]",0
+Ai được gọi là công chức quản lý thuế? Bạn có thể nêu rõ không?,,"[121, 134, 8, 46, 122]",0
+Khi nào người nộp thuế được cấp giấy chứng nhận đăng ký thuế? Theo luật hiện hành?,,"[15, 8, 85, 83, 30]",0
+Cơ quan thuế bao gồm những đơn vị nào? Trong trường hợp cụ thể nào?,,"[39, 30, 3, 120, 103]",0
+"Theo quy định, quản lý rủi ro trong quản lý thuế được áp dụng như thế nào?",,"[3, 5, 107, 42, 73]",0
+Ai được gọi là công chức quản lý thuế? Theo luật hiện hành?,,"[105, 5, 15, 136, 8]",0
+Ai được gọi là công chức quản lý thuế? Trong trường hợp cụ thể nào?,,"[3, 121, 133, 120, 39]",0
+Luật Quản lý thuế quy định phạm vi điều chỉnh như thế nào? Theo luật hiện hành?,,"[136, 15, 139, 42, 27]",0
+"Theo quy định, cơ quan nào chịu trách nhiệm hướng dẫn việc kê khai thuế điện tử?",,"[18, 8, 17, 15, 27]",0
+Cơ quan nào chịu trách nhiệm hướng dẫn việc kê khai thuế điện tử? Theo luật hiện hành?,,"[8, 17, 15, 27, 18]",0
+Việc hoàn thuế được thực hiện trong trường hợp nào? Trong trường hợp cụ thể nào?,,"[39, 110, 124, 68, 121]",0
+Cơ quan nào chịu trách nhiệm hướng dẫn việc kê khai thuế điện tử? Bạn có thể nêu rõ không?,,"[8, 121, 18, 48, 27]",0
+Luật Quản lý thuế quy định phạm vi điều chỉnh như thế nào? Theo luật hiện hành?,,"[136, 15, 139, 42, 27]",0
+Việc cưỡng chế thi hành quyết định hành chính về thuế được quy định như thế nào? Theo luật hiện hành?,,"[15, 27, 19, 145, 126]",0
+Khi nào người nộp thuế được cấp giấy chứng nhận đăng ký thuế? Bạn có thể nêu rõ không?,,"[8, 39, 83, 30, 122]",0
+"Theo quy định, quản lý rủi ro trong quản lý thuế được áp dụng như thế nào?",,"[3, 5, 107, 42, 73]",0
+Người nộp thuế có những quyền gì theo luật? Theo luật hiện hành?,,"[17, 27, 5, 15, 42]",0
+Việc hoàn thuế được thực hiện trong trường hợp nào?,,"[110, 39, 35, 68, 69]",0
+Ai là đối tượng áp dụng theo Luật Quản lý thuế? Theo luật hiện hành?,,"[130, 5, 125, 136, 15]",0
+Ai là đối tượng áp dụng theo Luật Quản lý thuế? Theo luật hiện hành?,,"[130, 5, 125, 136, 15]",0
+"Theo quy định, người nộp thuế có những quyền gì theo luật?",,"[17, 3, 45, 133, 5]",0
+Người nộp thuế có những quyền gì theo luật? Trong trường hợp cụ thể nào?,,"[3, 110, 133, 17, 83]",0
+Ai được gọi là công chức quản lý thuế? Bạn có thể nêu rõ không?,,"[121, 134, 8, 46, 122]",0
+Quản lý rủi ro trong quản lý thuế được áp dụng như thế nào? Trong trường hợp cụ thể nào?,,"[3, 120, 39, 110, 133]",0
+Quản lý rủi ro trong quản lý thuế được áp dụng như thế nào? Theo luật hiện hành?,,"[5, 73, 42, 3, 15]",0
+Cơ quan nào chịu trách nhiệm hướng dẫn việc kê khai thuế điện tử? Theo luật hiện hành?,,"[8, 17, 15, 27, 18]",0
+Cơ quan nào chịu trách nhiệm hướng dẫn việc kê khai thuế điện tử?,,"[18, 8, 48, 27, 41]",0
+Ai là đối tượng áp dụng theo Luật Quản lý thuế? Theo luật hiện hành?,,"[130, 5, 125, 136, 15]",0
+Việc cưỡng chế thi hành quyết định hành chính về thuế được quy định như thế nào?,,"[128, 133, 125, 3, 126]",0
+Việc cưỡng chế thi hành quyết định hành chính về thuế được quy định như thế nào? Trong trường hợp cụ thể nào?,,"[3, 133, 124, 127, 128]",0
+Việc hoàn thuế được thực hiện trong trường hợp nào? Bạn có thể nêu rõ không?,,"[121, 134, 103, 39, 110]",0
+"Theo quy định, việc cưỡng chế thi hành quyết định hành chính về thuế được quy định như thế nào?",,"[3, 15, 19, 27, 126]",0
+"Theo quy định, quản lý rủi ro trong quản lý thuế được áp dụng như thế nào?",,"[3, 5, 107, 42, 73]",0
+Ai là đối tượng áp dụng theo Luật Quản lý thuế? Bạn có thể nêu rõ không?,,"[134, 136, 3, 15, 73]",0
+Ai là đối tượng áp dụng theo Luật Quản lý thuế? Theo luật hiện hành?,,"[130, 5, 125, 136, 15]",0
+"Theo quy định, ai được gọi là công chức quản lý thuế?",,"[105, 3, 5, 10, 18]",0
+Khi nào người nộp thuế được cấp giấy chứng nhận đăng ký thuế? Theo luật hiện hành?,,"[15, 8, 85, 83, 30]",0
+Ai là đối tượng áp dụng theo Luật Quản lý thuế? Bạn có thể nêu rõ không?,,"[134, 136, 3, 15, 73]",0
+Người nộp thuế có những quyền gì theo luật? Trong trường hợp cụ thể nào?,,"[3, 110, 133, 17, 83]",0
+Ai là đối tượng áp dụng theo Luật Quản lý thuế? Theo luật hiện hành?,,"[130, 5, 125, 136, 15]",0
+"Theo quy định, ai là đối tượng áp dụng theo luật quản lý thuế?",,"[143, 3, 5, 130, 133]",0

@@ -1,0 +1,5 @@
+__pycache__/
+*.log
+test_chunks2.json
+test.py
+test.json
