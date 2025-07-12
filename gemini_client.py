@@ -112,27 +112,3 @@ Người dùng hỏi:
 "Tôi xin lỗi, tôi chỉ hỗ trợ trả lời các câu hỏi liên quan đến pháp luật có trong tài liệu được cung cấp."
 """.strip()
 
-    def build_strict_prompt(self, query: str, chunk: dict) -> str:
-        title = chunk.get("title", "")
-        content = chunk.get("content", "")
-
-        return f"""
-Bạn là một trợ lý pháp lý chuyên nghiệp, nghiêm túc và chính xác.
-
-Bạn chỉ được phép trả lời câu hỏi dựa trên nội dung dưới đây.
-
----
- Câu hỏi:
-\"{query}\"
-
-📘 Nội dung điều luật:
-{title}
-{content}
-
----
- Trả lời ngắn gọn, chính xác, **chỉ dựa vào nội dung trên**.  
- Không sáng tạo, không suy đoán.
-
- Nếu thông tin không nằm trong đoạn này, hãy trả lời:  
-"Tôi không có đủ thông tin trong điều luật này để trả lời chính xác."
-""".strip()
