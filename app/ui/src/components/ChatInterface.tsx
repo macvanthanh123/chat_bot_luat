@@ -117,7 +117,7 @@ export function ChatInterface({
         {
           id: (Date.now() + 2).toString(),
           type: "bot",
-          content: "❌ Lỗi khi gọi API backend.",
+          content: "Lỗi khi gọi API backend.",
           timestamp: new Date(),
         },
       ]);

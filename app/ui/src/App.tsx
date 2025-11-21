@@ -14,11 +14,10 @@ export default function App() {
   }>>([]);
 
   const [isConfigOpen, setIsConfigOpen] = useState(true);
-  const [isChatOpen, setIsChatOpen] = useState(true); // 🔥 thêm state ẩn/hiện chat
+  const [isChatOpen, setIsChatOpen] = useState(true); 
 
-  // ============================
-  // 🔥 NÂNG STATE CONFIG LÊN
-  // ============================
+
+
 
   const [temperature, setTemperature] = useState([0.7]);
   const [maxTokens, setMaxTokens] = useState([2000]);
