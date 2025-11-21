@@ -10,3 +10,4 @@ requests
 google-generativeai
 python-multipart
 datetime
+loguru
